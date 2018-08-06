@@ -1,0 +1,50 @@
+.item-expression-operands {
+  display: flex;
+  position: relative;
+
+  .has-right > &:before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 300px;
+    right: 300px;
+    height: 50px;
+    border-top: $line-width dashed $primary;
+    z-index: -1;
+  }
+}
+
+.item-expression-operand-right {
+  position: relative;
+
+  &:first-child {
+    margin-left: 250px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 50px;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    border-top: $line-width solid $base;
+    border-left: $line-width dashed $primary;
+    z-index: -1;
+  }
+}
+
+.item-expression-operand-left {
+  margin-left: 40px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    height: 20px;
+    left: 100px;
+    border-left: $line-width dashed $primary;
+    z-index: -1;
+  }
+}
