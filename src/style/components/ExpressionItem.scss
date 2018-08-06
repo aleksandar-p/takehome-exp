@@ -3,9 +3,46 @@
   border: 1px solid $shade;
   width: 360px;
   display: flex;
-  margin: 10px;
+  margin: 10px 20px;
   justify-content: space-between;
   background: $base;
   border-radius: 4px;
   box-shadow: 0 4px 30px -10px rgba(0,0,0,.5);
+}
+
+.toggle {
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  font-weight: bold;
+  font-size: 24px;
+  color: #999;
+  opacity: .8;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  background: none;
+  padding: 0;
+  outline: none;
+
+  &:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: inherit;
+    color: #fff;
+    background: rgba(0,0,0,.5);
+    font-size: 12px;
+    padding: 3px 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: .3s all ease-in;
+  }
+
+  &:hover:before {
+    opacity: 1;
+  }
 }

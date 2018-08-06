@@ -10,13 +10,22 @@ import { DEFAULT_EXPRESSION } from "../stores/ExpressionStore";
 @observer
 export class ExpressionItem extends React.Component<{ item: Expression }> {
   state = {
-    left: OperandTypes.String,
-    right: OperandTypes.String
+    left: this.hasOperand("left") ? OperandTypes.Expression : OperandTypes.String,
+    right: this.hasOperand("right") ? OperandTypes.Expression : OperandTypes.String,
+    open: true
   }
 
   updateOperand = (value, operand: "left" | "right") => {
     this.setState({ [operand]: value });
     this.props.item[operand] = value === OperandTypes.Expression ? DEFAULT_EXPRESSION : "";
+  }
+
+  toggle = () => {
+    this.setState((state: { open: boolean }) => ({ open: !state.open }));
+  }
+
+  hasOperand(operand: "left" | "right") {
+    return typeof this.props.item[operand] !== "string";
   }
 
   render() {
@@ -25,8 +34,17 @@ export class ExpressionItem extends React.Component<{ item: Expression }> {
     return (
       <div className={
         "container" +
-        (typeof item.left !== "string" ? " has-left" : "") +
-        (typeof item.right !== "string" ? " has-right" : "")}>
+        (this.hasOperand("left") ? " has-left" : "") +
+        (this.hasOperand("right") ? " has-right" : "")}>
+        {
+          (this.hasOperand("left") || this.hasOperand("right")) &&
+          <button
+            onClick={this.toggle}
+            className={"toggle" + (this.state.open ? " open" : " close")}
+            data-tooltip={this.state.open ? "Close" : "Open"}>
+            {this.state.open ? "-" : "+"}
+          </button>
+        }
         <div className="item">
           <OperandInput
             textValue={this.props.item.left}
@@ -40,7 +58,7 @@ export class ExpressionItem extends React.Component<{ item: Expression }> {
             selectValue={this.state.right}
             selectChange={(e) => this.updateOperand(e, "right")} />
         </div>
-        <ExpressionItemOperands left={item.left} right={item.right} />
+        {this.state.open && <ExpressionItemOperands left={item.left} right={item.right} />}
       </div>
     );
   }
